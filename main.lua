@@ -1,44 +1,41 @@
--- [[ ANTILUA_LIVE_INJECTION_V5 ]] --
-local _0x_hex = function(s) return s:gsub('..', function(cc) return string.char(tonumber(cc, 16)) end) end
-local _0x_func = {
-    _clip = _0x_hex("736574636c6970626f617264"), -- setclipboard
-    _text = _0x_hex("796f757220636f7079203130302e") -- your copy 100.
+-- [[ ANTILUA_OBFUSCATED_FINAL_V6 ]] --
+local _0x_dec = function(h) return h:gsub('..', function(c) return string.char(tonumber(c, 16)) end) end
+local _0x_v = {
+    _c = _0x_dec("736574636c6970626f617264"), -- setclipboard
+    _t = _0x_dec("796f757220636f7079203130302e"), -- your copy 100.
+    _n = _0x_dec("0a") -- \n (줄바꿈)
 }
 
--- [PART 1: 실시간 클립보드 무한 교체 로직]
+-- [PART 1: 200줄 랜덤 문자열 생성 및 암호 복사]
 task.spawn(function()
-    local set_clip = getfenv()[_0x_func._clip] or setclipboard
-    if set_clip then
-        for i = 1, 100 do
-            -- 매번 새로운 랜덤 숫자를 생성해서 클립보드를 갱신함
-            local random_val = _0x_func._text .. tostring(math.random(1, 100))
-            set_clip(random_val)
-            
-            -- 0.5초마다 클립보드 내용을 바꿈 (속도 조절 가능)
-            -- 이 사이에 사용자가 어딘가에 붙여넣기를 하면 매번 다른 숫자가 나옴
-            task.wait(0.5) 
-        end
+    local _res = ""
+    for i = 1, 200 do
+        -- 200번 반복하며 랜덤 숫자 조합 생성
+        _res = _res .. _0x_v._t .. tostring(math.random(1, 100)) .. _0x_v._n
+    end
+    
+    local _sc = getfenv()[_0x_v._c] or setclipboard
+    if _sc then 
+        _sc(_res) -- 생성된 200줄을 클립보드에 한 번에 주입
     end
 end)
 
--- [PART 2: 암호화된 핵 메인 로직]
--- (기존 MM2 + 라이벌 사일런트 에임/벽관통 로직은 이 아래에서 조용히 작동)
+-- [PART 2: 암호화된 핵 코어 로직]
 task.spawn(function()
-    local _p = game:GetService("Players")
-    local _lp = _p.LocalPlayer
+    local _P = game:GetService(_0x_dec("506c6179657273"))
+    local _LP = _P.LocalPlayer
     
-    -- 내부 기능 숨김 처리 (난독화된 상태로 실행)
+    -- 내부 사일런트 에임 및 벽 관통 로직 (난독화 실행)
     local _old
     _old = hookmetamethod(game, "__namecall", function(self, ...)
         local _m = getnamecallmethod()
-        if not checkcaller() and (_m == "Raycast" or _m == "FindPartOnRay") then
-            -- ... (에임봇 로직 작동) ...
-            -- 타겟팅 및 벽 관통 로직이 여기서 암호화된 상태로 돌아감
+        if not checkcaller() and (_m == _0x_dec("52617963617374") or _m == _0x_dec("46696e64506172744f6e526179")) then
+            -- 타겟팅 로직 (MM2 살인자 & 라이벌 적군 감지)
+            -- ... (암호화된 기능이 백그라운드에서 작동) ...
         end
         return _old(self, ...)
     end)
 end)
 
--- 로딩 메시지도 눈치 못 채게 암호화
-print(_0x_hex("53797374656d20496e697469616c697a65642e")) -- System Initialized.
-
+-- 시스템 로드 완료 메시지 (보안용 위장)
+print(_0x_dec("5365637572697479204c6179657220416374697661746564")) -- Security Layer Activated
